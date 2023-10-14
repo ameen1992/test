@@ -44,5 +44,6 @@ const props = defineProps(['open', 'name', 'routeName', 'id'])
 const formDelete = useForm({})
 const deleteNote = () => {
     formDelete.delete(route(props.routeName, props.id));
+    props.open = false
 }
 </script>

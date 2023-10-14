@@ -14,11 +14,9 @@
             </div>
             <div class="hidden md:block">
                 <div class="ml-4 flex items-center md:ml-6">
-                    <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        <span class="absolute -inset-1.5" />
-                        <span class="sr-only">View notifications</span>
-                        <BellIcon class="h-6 w-6" aria-hidden="true" />
-                    </button>
+                    <Link :href="route('notes.create')" type="button" class="relative rounded-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Add a new note
+                    </Link>
                 </div>
             </div>
             <div class="-mr-2 flex md:hidden">
@@ -38,6 +36,7 @@
 import { Link } from '@inertiajs/vue3'
 import { Disclosure, DisclosureButton } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import route from "ziggy-js";
 
 const navigation = [
     { name: 'Home', href: '/' },
