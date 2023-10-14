@@ -17,7 +17,11 @@
             <input v-model="newTask" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Add new task">
         </div>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            
+            <input type="radio" value="0" v-model="newTaskStatus" />
+            <label for="one">Todo</label>
+
+            <input type="radio" value="1" v-model="newTaskStatus" />
+            <label for="two">Done</label>
             <button @click="addTask" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Add</button>
         </div>
         <template v-for="(task, index) in form.tasks">
@@ -25,7 +29,11 @@
                 <input v-model="form.tasks[index].name" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text">
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <input type="radio" value="0" v-model="form.tasks[index].status" />
+                <label for="one">Todo</label>
 
+                <input type="radio" value="1" v-model="form.tasks[index].status" />
+                <label for="two">Done</label>
             </div>
         </template>
     </div>
@@ -51,15 +59,15 @@
     })
 
     let newTask = ref('')
+    let newTaskStatus = ref(false)
     const addTask = () => {
         form.tasks.push({
             'name': newTask.value,
-            'status': 0,
+            'status': newTaskStatus.value,
         })
 
-        console.log(form.tasks)
-
         newTask.value = null
+        newTaskStatus.value = false
     }
 
     const form = useForm({
