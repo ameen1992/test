@@ -15,7 +15,6 @@
                                         <ExclamationTriangleIcon class="h-6 w-6 text-red-600" aria-hidden="true" />
                                     </div>
                                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                        <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900">Deactivate account</DialogTitle>
                                         <div class="mt-2">
                                             <p class="text-sm text-gray-500">Are you sure you want to delete this {{name}}.</p>
                                         </div>
@@ -35,15 +34,15 @@
 </template>
 
 <script setup>
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 import {useForm} from "@inertiajs/vue3";
 import route from "ziggy-js";
 
-const props = defineProps(['open', 'name', 'route', 'id'])
+const props = defineProps(['open', 'name', 'routeName', 'id'])
 
 const formDelete = useForm({})
 const deleteNote = () => {
-    formDelete.delete(route(props.route, props.id));
+    formDelete.delete(route(props.routeName, props.id));
 }
 </script>

@@ -63,6 +63,6 @@ class NotesController extends Controller
     {
         $note->delete();
 
-        return to_route('notes.index');
+        return to_route('home');
     }
 }
