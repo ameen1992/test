@@ -18,10 +18,10 @@
         </div>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <input type="radio" value="0" v-model="newTaskStatus" />
-            <label for="one">Todo</label>
+            <label class="p-3"  for="one">Todo</label>
 
             <input type="radio" value="1" v-model="newTaskStatus" />
-            <label for="two">Done</label>
+            <label class="p-3"  for="two">Done</label>
             <button @click="addTask" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Add</button>
         </div>
         <template v-for="(task, index) in form.tasks">
@@ -30,11 +30,13 @@
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <input type="radio" value="0" v-model="form.tasks[index].status" />
-                <label for="one">Todo</label>
+                <label class="p-3" for="one">Todo</label>
 
                 <input type="radio" value="1" v-model="form.tasks[index].status" />
-                <label for="two">Done</label>
+                <label class="p-3" for="two">Done</label>
+                <button @click="deleteTask" class="mt-3 inline-flex w-full bg-red-300 justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-500 sm:mt-0 sm:w-auto">Delete</button>
             </div>
+            <modal :open="showConfirmDeleteModel" :route-name="'tasks.destroy'" :id="task.id" :name="'task'"></modal>
         </template>
     </div>
 
@@ -46,6 +48,7 @@
     import route from "ziggy-js";
     import { useForm } from '@inertiajs/vue3'
     import {ref} from "vue";
+    import Modal from "@/components/modal.vue";
 
     const props = defineProps({
         isEdit: {
@@ -58,8 +61,9 @@
         },
     })
 
-    let newTask = ref('')
-    let newTaskStatus = ref(false)
+    const showConfirmDeleteModel = ref(false);
+    const newTask = ref('')
+    const newTaskStatus = ref(false)
     const addTask = () => {
         form.tasks.push({
             'name': newTask.value,
@@ -81,5 +85,9 @@
         } else {
             form.post(route('notes.store'))
         }
+    }
+
+    function deleteTask() {
+        showConfirmDeleteModel.value = !showConfirmDeleteModel.value
     }
 </script>

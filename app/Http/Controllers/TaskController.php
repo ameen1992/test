@@ -17,4 +17,11 @@ class TaskController extends Controller
         $task->status = !$task->status;
         $task->save();
     }
+
+    public function destory(Request $request, Task $task)
+    {
+        $task->delete();
+
+        return to_route('home');
+    }
 }
