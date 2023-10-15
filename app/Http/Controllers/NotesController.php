@@ -5,18 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Models\Note;
-use App\Models\Task;
+use App\Services\UpdateNoteService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response as InertiaResponse;
 
 class NotesController extends Controller
 {
-    public function create()
+    public function create(): InertiaResponse
     {
         return Inertia::render('notes-create');
     }
 
-    public function store(StoreNoteRequest $request)
+    public function store(StoreNoteRequest $request): RedirectResponse
     {
         $note = Note::create([
             'tittle' => $request->get('tittle')
@@ -27,7 +29,7 @@ class NotesController extends Controller
         return to_route('home');
     }
 
-    public function edit(Request $request, Note $note)
+    public function edit(Request $request, Note $note): InertiaResponse
     {
         return Inertia::render('notes-create', [
             'isEdit' => true,
@@ -35,31 +37,14 @@ class NotesController extends Controller
         ]);
     }
 
-    public function update(UpdateNoteRequest $request, Note $note)
+    public function update(UpdateNoteRequest $request, Note $note): RedirectResponse
     {
-        $note->update([
-            'tittle' => $request->get('tittle')
-        ]);
-
-        list($oldTasks, $newTasks) = collect($request->get('tasks'))->partition(function ($item) {
-            return isset($item['id']);
-        });
-
-        foreach ($oldTasks as $oldTask) {
-            $task = Task::find($oldTask['id']);
-            $task->update([
-                'name' => $oldTask['name'],
-                'status' => $oldTask['status'],
-            ]);
-            $task->save();
-        }
-
-        $note->tasks()->createMany($newTasks);
+        UpdateNoteService::handle($note, collect($request->get('tasks')));
 
         return to_route('home');
     }
 
-    public function destroy(Note $note)
+    public function destroy(Note $note): RedirectResponse
     {
         $note->tasks()->delete();
 
