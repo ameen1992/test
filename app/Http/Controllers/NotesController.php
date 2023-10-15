@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreNoteRequest;
-use App\Http\Requests\UpdateNoteRequest;
+use Inertia\Inertia;
 use App\Models\Note;
+use Illuminate\Http\Request;
 use App\Services\UpdateNoteService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\StoreNoteRequest;
+use App\Http\Requests\UpdateNoteRequest;
 use Inertia\Response as InertiaResponse;
 
 class NotesController extends Controller
