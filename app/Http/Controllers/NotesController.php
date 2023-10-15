@@ -39,7 +39,7 @@ class NotesController extends Controller
 
     public function update(UpdateNoteRequest $request, Note $note): RedirectResponse
     {
-        UpdateNoteService::handle($note, collect($request->get('tasks')));
+        UpdateNoteService::handle($note, $request->get('tittle'), collect($request->get('tasks')));
 
         return to_route('home');
     }

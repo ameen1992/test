@@ -8,10 +8,10 @@ use Illuminate\Support\Collection;
 
 class UpdateNoteService
 {
-    public static function handle(Note $note, Collection $tasks): void
+    public static function handle(Note $note, $tittle, Collection $tasks): void
     {
         $note->update([
-            'tittle' => $request->get('tittle')
+            'tittle' => $tittle
         ]);
 
         list($oldTasks, $newTasks) = $tasks->partition(function ($item) {
