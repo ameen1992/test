@@ -61,6 +61,8 @@ class NotesController extends Controller
 
     public function destroy(Note $note)
     {
+        $note->tasks()->delete();
+
         $note->delete();
 
         return to_route('home');
